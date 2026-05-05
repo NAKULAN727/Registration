@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+require("dotenv").config();
 
 const app = express();
 
@@ -9,9 +10,12 @@ app.use(cors());
 app.use(express.json());
 
 // MongoDB Connection
-mongoose.connect('mongodb://127.0.0.1:27017/touristDB')
-  .then(() => console.log("MongoDB Connected to touristDB"))
-  .catch(err => console.error("MongoDB Connection Error:", err));
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+  .then(() => console.log("MongoDB Atlas Connected"))
+  .catch(err => console.error("DB Error:", err));
 
 // Mongoose Schema
 const touristSchema = new mongoose.Schema({
